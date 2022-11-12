@@ -4,19 +4,19 @@ import { DrawerItem } from ".";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-export const MenuItem: React.FC<DrawerItem> = ({
+interface MenuItemProps extends DrawerItem {
+  isActive: boolean;
+}
+export const MenuItem: React.FC<MenuItemProps> = ({
   name,
   displayText,
   icon,
   goto,
+  isActive = false,
 }) => {
   const { pathname } = useRouter();
   const activeMenuTextColor = "brand.500";
   const activeMenuBg = "blackAlpha.50";
-
-  const isActive = useMemo(() => {
-    return pathname.toLowerCase().includes(name.toLowerCase());
-  }, [pathname, name]);
 
   const getOnActiveBorderProps = useCallback(() => {
     return {
@@ -26,10 +26,12 @@ export const MenuItem: React.FC<DrawerItem> = ({
     };
   }, [isActive]);
 
+  console.log(pathname + goto);
+
   return (
     <Button
       as={Link}
-      href={goto}
+      href={pathname + goto}
       replace={pathname.includes(goto)}
       w="100%"
       variant="ghost"

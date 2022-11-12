@@ -10,7 +10,7 @@ import { uniqueId } from "lodash";
 import React from "react";
 import { MenuItem } from "./MenuItem";
 
-export type DrawerItem = {
+export interface DrawerItem {
   /**
    * Supply the icon as React Element which you want to display for this item
    * you may include styling to the icon too, if not will use default styling
@@ -30,9 +30,10 @@ export type DrawerItem = {
    * RouterLink
    */
   goto: string;
-};
+}
 
 interface DrawerMenuProps {
+  basePath: string;
   menus: DrawerItem[];
   /**
    * Provide your your background if required, will override
@@ -45,11 +46,16 @@ interface DrawerMenuProps {
    * on top of the left drawer menu
    */
   title?: string;
+  /**
+   * The name of item which is on active
+   */
+  activeItem: string;
 }
 export const DrawerMenu: React.FC<DrawerMenuProps> = ({
   menus,
   contentBackground,
   title,
+  activeItem,
 }) => {
   const drawerBorder = useColorModeValue("blackAlpha.50", "whiteAlpha.50");
   return (
@@ -95,7 +101,11 @@ export const DrawerMenu: React.FC<DrawerMenuProps> = ({
         )}
         <VStack py="30px" px="0px">
           {menus.map((item: DrawerItem) => (
-            <MenuItem key={uniqueId()} {...item} />
+            <MenuItem
+              key={uniqueId()}
+              {...item}
+              isActive={item.name === activeItem}
+            />
           ))}
         </VStack>
       </Box>

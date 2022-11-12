@@ -10,18 +10,25 @@ const exampleMenus = [
     icon: <GeneralIcon />,
     name: "general",
     displayText: "General",
-    goto: "general",
+    goto: "/general",
   },
   {
     icon: <AuthIcon />,
     name: "authentication",
     displayText: "Authentication",
-    goto: "authentication",
+    goto: "/authentication",
   },
 ];
 
 const Sandbox: React.FC = () => {
-  return <DrawerMenu menus={exampleMenus} title="Example" />;
+  return (
+    <DrawerMenu
+      menus={exampleMenus}
+      title="Example"
+      basePath="/finance"
+      activeItem="general"
+    />
+  );
 };
 
 export default Sandbox;
